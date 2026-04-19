@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>◆◆ 迷宮：Text Labyrinth Online Ver 2.0 ◆◆</title>
+    <style>
+        /* 虹色イルミネーション（クリア用） */
+        @keyframes rainbow {
+            0% { background-color: #ff0000; color: #fff; }
+            20% { background-color: #ffff00; color: #000; }
+            40% { background-color: #00ff00; color: #000; }
+            60% { background-color: #00ffff; color: #000; }
+            80% { background-color: #0000ff; color: #fff; }
+            100% { background-color: #ff00ff; color: #fff; }
+        }
+        .clear-bg { animation: rainbow 3s infinite; }
+        .hidden { color: #C0C0C0; background-color: #C0C0C0; }
+        .pixel-link { font-size: 1px; color: #C0C0C0; text-decoration: none; cursor: default; }
+        body { font-family: "MS Pゴシック", sans-serif; line-height: 1.5; }
+    </style>
+</head>
+<body bgcolor="#C0C0C0" text="#000000" id="main-body">
+
+<center>
+<br>
+<font size="+2"><b>■ 脱出ゲーム：修羅のテキストサイト編 ■</b></font><br>
+<font size="-1">? 君は最後まで辿り着けるか ?</font>
+<br><br>
+
+<table border="1" cellpadding="15" width="500" bgcolor="#DCDCDC">
+    <tr>
+        <td>
+            <div id="st1">
+                <p><b>【Stage 1：挨拶の基本】</b></p>
+                <p>このサイトの管理人に挨拶をしよう。<br>「管理人」という文字をクリックすれば道は開かれる。</p>
+                <p align="left">
+                「はじめまして、<a href="javascript:next(2)">管理人</a>さん。日記楽しみにしてます！」<br>
+                「あ、間違えて変なところクリックしちゃった（爆）」
+                </p>
+            </div>
+
+            <div id="st2" style="display:none;">
+                <p><b>【Stage 2：不可視の文字】</b></p>
+                <p>部屋の壁に、何か文字が書かれているようだ。<br>しかし、暗くてよく見えない……。</p>
+                <p>マウスで「闇」をドラッグして反転させてみよう。</p>
+                <br>
+                <p class="hidden">第二の合言葉は「TRIP」だ。忘れるなよ。</p>
+                <br>
+                <input type="button" value="パスワード入力" onclick="checkSt2()">
+            </div>
+
+            <div id="st3" style="display:none;">
+                <p><b>【Stage 3：裏側の真実】</b></p>
+                <p>「この世界はプログラムでできている」</p>
+                <p>そんな中二病的なヒントを思い出した。<br>ブラウザの機能で「ページのソース」を表示してみよう。<br>そこに第三の答えが隠されているはずだ。</p>
+                <br>
+                <input type="button" value="答える" onclick="checkSt3()">
+            </div>
+
+            <div id="st4" style="display:none;">
+                <p><b>【Stage 4：知識の試練】</b></p>
+                <p>管理人が大好きな食べ物を選べ。<br>（ヒントは掲示板の過去ログにあるかもしれない……）</p>
+                <br>
+                <table border="0">
+                    <tr>
+                        <td><input type="button" value="カレー" onclick="alert('惜しい！')"></td>
+                        <td><input type="button" value="牛丼" onclick="next(5)"></td>
+                        <td><input type="button" value="ラーメン" onclick="alert('それは管理人の好物ですが、正解ではありません（？）')"></td>
+                    </tr>
+                </table>
+                <p><font size="-2">※ヒント：2003/02/14の日記を読め</font></p>
+            </div>
+
+            <div id="st5" style="display:none;">
+                <p><b>【Final Stage：針の穴を通せ】</b></p>
+                <p>ついに最後だ。この文章の中に、一箇所だけ「1ピクセルの出口」を用意した。</p>
+                <p>見つけ出せ。クリックしろ。さすれば救われん。</p>
+                <br>
+                <p align="left">
+                テキストサイトの時代は終わったのかもしれない。でも、あの頃の情熱は消えない。<br>
+                管理人は、今日もどこかで<a href="javascript:clear()" class="pixel-link">.</a>HTMLを打っている。<br>
+                君の旅はここで終わりだ。お疲れ様。
+                </p>
+                <p><font size="-2">（……文末の「。」のあたりが怪しいという噂がある）</font></p>
+            </div>
+
+            <div id="clear-screen" style="display:none;">
+   		 <br><br>
+   		 <font size="+4"><b>★☆ CONGRATULATIONS! ☆★</b></font><br>
+   		 <br>
+   		 <table border="5" cellpadding="20" bgcolor="#000000">
+    		    <tr>
+       		     <td>
+           	     <font size="+2" color="#00FF00">
+          	          あなたは 
+              	      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Ftsu12uha10.github.io%2Ftext-site-2000%2Fclear&count_bg=%2300FF00&title_bg=%23000000&title=CLEAR_COUNT" style="vertical-align: middle;">
+              	      人目の脱出成功者です！
+            	    </font>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <a href="index.html" style="color:yellow;">トップページへ戻る</a>
+</div>
+        </td>
+    </tr>
+</table>
+
+<br><br>
+<hr width="80%">
+<div id="footer">
+    <font size="-1">
+        現在の進行状況：<span id="prog">[----------]</span>
+    </font>
+</div>
+
+</center>
+
+<script>
+    function next(stage) {
+        // 全てのステージを非表示に
+        for(let i=1; i<=5; i++) {
+            document.getElementById('st'+i).style.display = 'none';
+        }
+        // 指定のステージを表示
+        document.getElementById('st'+stage).style.display = 'block';
+        
+        // プログレスバー更新（力技）
+        var bars = ["", "[##--------]", "[####------]", "[######----]", "[########--]", "[##########]"];
+        document.getElementById('prog').innerText = bars[stage] || bars[5];
+    }
+
+    function checkSt2() {
+        var ans = prompt("第二の合言葉は？");
+        if(ans === "TRIP") { next(3); } else { alert("ブブー！（汗）"); }
+    }
+
+    function checkSt3() {
+        var ans = prompt("ソースの中に隠された言葉は？");
+        if(ans === "SOURCE") { next(4); } else { alert("右クリック禁止……にはしてないから見てみて！（爆）"); }
+    }
+
+    function checkSt4() {
+        // Stage4はボタン押しで判定
+    }
+
+    function clear() {
+        alert("おめでとう！隠しリンクを発見したぞ！");
+        document.getElementById('st5').style.display = 'none';
+        document.getElementById('clear').style.display = 'block';
+        document.getElementById('main-body').className = 'clear-bg';
+        document.getElementById('footer').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
