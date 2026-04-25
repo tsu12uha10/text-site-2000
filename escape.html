@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -13,10 +13,15 @@
             80% { background-color: #0000ff; color: #fff; }
             100% { background-color: #ff00ff; color: #fff; }
         }
-        .clear-bg { animation: rainbow 3s infinite; }
+        .clear-bg { animation: rainbow 0.5s infinite; } /* 速度を少し上げました */
         .hidden { color: #C0C0C0; background-color: #C0C0C0; }
         .pixel-link { font-size: 1px; color: #C0C0C0; text-decoration: none; cursor: default; }
-        body { font-family: "MS Pゴシック", sans-serif; line-height: 1.5; }
+        body { font-family: "MS Pゴシック", "MS PGothic", sans-serif; line-height: 1.5; }
+        
+        /* クリア画面用特別スタイル */
+        #clear-screen { text-align: center; }
+        .blink { animation: blink 0.5s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body bgcolor="#C0C0C0" text="#000000" id="main-body">
@@ -61,14 +66,14 @@
                 <p><b>【Stage 4：知識の試練】</b></p>
                 <p>管理人が大好きな食べ物を選べ。<br>（ヒントは掲示板の過去ログにあるかもしれない……）</p>
                 <br>
-                <table border="0">
+                <table border="0" align="center">
                     <tr>
                         <td><input type="button" value="カレー" onclick="alert('惜しい！')"></td>
                         <td><input type="button" value="牛丼" onclick="next(5)"></td>
                         <td><input type="button" value="ラーメン" onclick="alert('それは管理人の好物ですが、正解ではありません（？）')"></td>
                     </tr>
                 </table>
-                <p><font size="-2">※ヒント：2003/02/14の日記を読め</font></p>
+                <p align="center"><font size="-2">※ヒント：2003/02/14の日記を読め</font></p>
             </div>
 
             <div id="st5" style="display:none;">
@@ -78,30 +83,35 @@
                 <br>
                 <p align="left">
                 テキストサイトの時代は終わったのかもしれない。でも、あの頃の情熱は消えない。<br>
-                管理人は、今日もどこかで<a href="javascript:clear()" class="pixel-link">.</a>HTMLを打っている。<br>
+                管理人は、今日もどこかで<a href="javascript:clear_game()" class="pixel-link">.</a>HTMLを打っている。<br>
                 君の旅はここで終わりだ。お疲れ様。
                 </p>
                 <p><font size="-2">（……文末の「。」のあたりが怪しいという噂がある）</font></p>
             </div>
 
             <div id="clear-screen" style="display:none;">
-   		 <br><br>
-   		 <font size="+4"><b>★☆ CONGRATULATIONS! ☆★</b></font><br>
-   		 <br>
-   		 <table border="5" cellpadding="20" bgcolor="#000000">
-    		    <tr>
-       		     <td>
-           	     <font size="+2" color="#00FF00">
-          	          あなたは 
-              	      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Ftsu12uha10.github.io%2Ftext-site-2000%2Fclear&count_bg=%2300FF00&title_bg=%23000000&title=CLEAR_COUNT" style="vertical-align: middle;">
-              	      人目の脱出成功者です！
-            	    </font>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <a href="index.html" style="color:yellow;">トップページへ戻る</a>
-</div>
+                <br>
+                <font size="+4" color="#FF0000" class="blink"><b>★☆ 祝・脱出成功 ☆★</b></font><br>
+                <br>
+                <table border="5" cellpadding="20" bgcolor="#000000" align="center">
+                    <tr>
+                        <td>
+                            <font size="+2" color="#00FF00">
+                                あなたは 
+                                <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Ftsu12uha10.github.io%2Ftext-site-2000%2Fclear&count_bg=%2300FF00&title_bg=%23000000&title=CLEAR_COUNT" style="vertical-align: middle;">
+                                人目の訪問者です！
+                            </font>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <p><b><font color="#0000FF">～ 管理人より ～</font></b><br>
+                ここまで辿り着くとは……君は真のテキストサイトマニアだ！<br>
+                キリ番を踏んだ人は掲示板(BBS)で報告してくれよな！</p>
+                <br>
+                <a href="index.html" style="color:red;"><b>トップページへ戻る（戻れない）</b></a><br>
+                <a href="#" onclick="location.reload();" style="color:blue;">もう一度挑戦する</a>
+            </div>
         </td>
     </tr>
 </table>
@@ -122,10 +132,13 @@
         for(let i=1; i<=5; i++) {
             document.getElementById('st'+i).style.display = 'none';
         }
+        // クリア画面も隠しておく
+        document.getElementById('clear-screen').style.display = 'none';
+        
         // 指定のステージを表示
         document.getElementById('st'+stage).style.display = 'block';
         
-        // プログレスバー更新（力技）
+        // プログレスバー更新
         var bars = ["", "[##--------]", "[####------]", "[######----]", "[########--]", "[##########]"];
         document.getElementById('prog').innerText = bars[stage] || bars[5];
     }
@@ -140,15 +153,20 @@
         if(ans === "SOURCE") { next(4); } else { alert("右クリック禁止……にはしてないから見てみて！（爆）"); }
     }
 
-    function checkSt4() {
-        // Stage4はボタン押しで判定
-    }
-
-    function clear() {
+    // clear関数名が予約語等と被る可能性を考慮し clear_game に変更
+    function clear_game() {
         alert("おめでとう！隠しリンクを発見したぞ！");
+        
+        // Stage 5を非表示
         document.getElementById('st5').style.display = 'none';
-        document.getElementById('clear').style.display = 'block';
+        
+        // ID修正：clear-screenを表示
+        document.getElementById('clear-screen').style.display = 'block';
+        
+        // 背景色変更
         document.getElementById('main-body').className = 'clear-bg';
+        
+        // フッター非表示
         document.getElementById('footer').style.display = 'none';
     }
 </script>
